@@ -34,7 +34,7 @@ namespace TitlePending
             this.bounds = new BoundingRectangle(position - new Vector2(texture.Width / 2 * scale, 0), texture.Width * scale, texture.Height * scale);
         }
 
-        public void Update(GameTime gameTime, NoteSprite[] notes, bool pressed)
+        public void Update(NoteSprite[] notes, bool pressed)
         {
             foreach(var note in notes)
             {
@@ -46,7 +46,7 @@ namespace TitlePending
 
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             if (Past) return;
             spriteBatch.Draw(texture, position - new Vector2(texture.Width / 2 * scale, 0), null, this.Color, 0, Vector2.Zero, scale, SpriteEffects.None, 0);

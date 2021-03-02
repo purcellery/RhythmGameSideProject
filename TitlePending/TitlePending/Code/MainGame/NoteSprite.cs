@@ -35,7 +35,7 @@ namespace TitlePending
             this.bounds = new BoundingRectangle(position - new Vector2(texture.Width / 2 * scale, 0), texture.Width * scale, texture.Height * scale);
         }
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             position += new Vector2(0, 10);
             Vector2 v = position - new Vector2(texture.Width / 2 * scale, 0);
@@ -43,7 +43,7 @@ namespace TitlePending
             this.bounds.Y = v.Y;
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             //if (Past) return;
             //spriteBatch.Draw(texture, position, Color.White);

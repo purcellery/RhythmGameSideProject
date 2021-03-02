@@ -12,23 +12,20 @@ namespace TitlePending
     {
         protected string textureName = "";
         protected Texture2D texture;
-        protected Game game;
         public Vector2 position = Vector2.Zero;
+        public Action<ContentManager> earlyContentLoad = (content) => { };
 
-        public GameObject(Game myGame)
+        public GameObject(Vector2 position)
         {
-            game = myGame;
+            this.position = position;
         }
 
-        public virtual void LoadContent()
+        public virtual void LoadContent(ContentManager content)
         {
-            if (textureName != "")
-            {
-                texture = game.Content.Load<Texture2D>(textureName);
-            }
+            earlyContentLoad(content);
         }
 
-        public virtual void Update(float deltaTime)
+        public virtual void Update()
         {
 
         }
@@ -42,6 +39,11 @@ namespace TitlePending
                 drawPosition.Y -= texture.Height / 2;
                 batch.Draw(texture, drawPosition, Color.White);
             }
+        }
+
+        public void SetTexture(Texture2D texture)
+        {
+            this.texture = texture;
         }
     }
 }

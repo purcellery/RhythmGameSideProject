@@ -6,22 +6,22 @@ using Microsoft.Xna.Framework.Input;
 
 namespace TitlePending
 {
-    public class InputManager
+    public static class InputManager
     {
-        KeyboardState currentKeyboardState;
-        KeyboardState priorKeyboardState;
-        MouseState currentMouseState;
-        MouseState priorMouseState;
-        GamePadState currentGamePadState;
-        GamePadState priorGamePadState;
+        static KeyboardState currentKeyboardState;
+        static KeyboardState priorKeyboardState;
+        static MouseState currentMouseState;
+        static MouseState priorMouseState;
+        static GamePadState currentGamePadState;
+        static GamePadState priorGamePadState;
 
-        public Vector2 Direction { get; private set; }
+        public static Vector2 Direction { get; private set; }
 
-        public bool Pressed { get; private set; }
+        public static bool Pressed { get; private set; }
 
-        public bool Exit { get; private set; } = false;
+        public static bool Exit { get; private set; } = false;
 
-        public void Update(GameTime gameTime)
+        public static void Update(GameTime gameTime)
         {
             #region State Updating
 
@@ -63,7 +63,7 @@ namespace TitlePending
 
             if (currentKeyboardState.IsKeyDown(Keys.Space) && !priorKeyboardState.IsKeyDown(Keys.Space))
             {
-                this.Pressed = true;
+                Pressed = true;
             }
             else
             {
