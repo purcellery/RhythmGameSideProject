@@ -19,6 +19,8 @@ namespace TitlePending.Code.MainGame
         public static Vector2 BlueHitter { get; set; }
         public static Vector2 OrangeHitter { get; set; }
 
+        public static State currentState;
+
         public static Vector2 GreenOrigin { get; set; }
         public static Vector2 RedOrigin { get; set; } 
         public static Vector2 YellowOrigin { get; set; } 

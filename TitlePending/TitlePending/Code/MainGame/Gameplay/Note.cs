@@ -14,9 +14,48 @@ namespace TitlePending.Code.MainGame.Gameplay
 
         private BoundingRectangle bounds;
 
-        public Note(Vector2 position): base(position)
+
+        public float originalScale = 0.25f;
+        public float finalScale = 0.5f;
+        public Vector2 noteOrigin;
+        public Vector2 noteDestination;
+
+        private float progression = 0;
+        public float testSpeed = 1.8f;
+
+        public Note(Vector2 position, NoteColor color): base(position)
         {
-            scale = 0.5f;
+            scale = originalScale;
+            switch (color)
+            {
+                case NoteColor.Green:
+                    noteOrigin = GameManager.GreenOrigin;
+                    noteDestination = GameManager.GreenHitter;
+                    this.color = Color.SpringGreen;
+                    break;
+                case NoteColor.Red:
+                    noteOrigin = GameManager.RedOrigin;
+                    noteDestination = GameManager.RedHitter;
+                    this.color = Color.Red;
+                    break;
+                case NoteColor.Yellow:
+                    noteOrigin = GameManager.YellowOrigin;
+                    noteDestination = GameManager.YellowHitter;
+                    this.color = Color.Yellow;
+                    break;
+                case NoteColor.Blue:
+                    noteOrigin = GameManager.BlueOrigin;
+                    noteDestination = GameManager.BlueHitter;
+                    this.color = Color.RoyalBlue;
+                    break;
+                case NoteColor.Orange:
+                    noteOrigin = GameManager.OrangeOrigin;
+                    noteDestination = GameManager.OrangeHitter;
+                    this.color = Color.MonoGameOrange;
+                    break;
+            }
+
+            this.position = noteOrigin;
         }
         public BoundingRectangle Bounds => bounds;
 
@@ -30,6 +69,12 @@ namespace TitlePending.Code.MainGame.Gameplay
         public override void Update()
         {
             base.Update();
+
+            progression += Time.deltaTime;
+            position = Vector2.Lerp(noteOrigin, noteDestination, progression/testSpeed);
+            float distanceFraction = Vector2.Distance(position, noteDestination) / Vector2.Distance(noteOrigin, noteDestination);
+            scale = MathHelper.Lerp(finalScale, originalScale, distanceFraction);
+
             this.Bounds.ResetValues(position, texture.Bounds.Size.ToVector2() * scale);
 
         }

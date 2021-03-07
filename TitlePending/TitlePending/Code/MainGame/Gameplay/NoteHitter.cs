@@ -32,6 +32,7 @@ namespace TitlePending.Code.MainGame.Gameplay
             lightTexture = content.Load<Texture2D>("square");
             darkTexture = content.Load<Texture2D>("darksquare");
             texture = lightTexture;
+
             this.bounds = new BoundingRectangle(position - new Vector2(texture.Width / 2 * scale, 0), texture.Width * scale, texture.Height * scale);
         }
         public override void Update()
@@ -43,7 +44,18 @@ namespace TitlePending.Code.MainGame.Gameplay
                 texture = darkTexture;
                 if (InputManager.SpacePressed)
                 {
-
+                    foreach(GameObject go in GameManager.currentState.gameObjects)
+                    {
+                        if(go is Note n)
+                        {
+                            if (n.Bounds.CollidesWith(bounds))
+                            {
+                                //successfully hitting a note
+                                n.color = Color.Transparent;
+                                break;
+                            }
+                        }
+                    }
                 }
             }
             else
@@ -56,6 +68,8 @@ namespace TitlePending.Code.MainGame.Gameplay
         {
             if (Past) return;
             base.Draw(spriteBatch);
+
+            
         }
     }
 }

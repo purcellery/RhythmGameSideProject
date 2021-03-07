@@ -87,6 +87,7 @@ namespace TitlePending
                     currentState = new PlayGame();
                     break;
             }
+            GameManager.currentState = currentState;
             currentState.Initialize();
             currentState.LoadContent(Content);
 

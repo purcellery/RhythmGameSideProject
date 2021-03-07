@@ -10,7 +10,7 @@ namespace TitlePending.Code.States
     public abstract class State
     {
         public StateID stateID;
-        protected List<GameObject> gameObjects;
+        public List<GameObject> gameObjects;
 
         public State(StateID stateID)
         {

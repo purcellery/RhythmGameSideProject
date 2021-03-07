@@ -25,6 +25,16 @@ namespace TitlePending
         public static bool GPressed { get; private set; }
 
 
+        public static bool QPressed { get; private set; }
+        public static bool WPressed { get; private set; }
+        public static bool EPressed { get; private set; }
+        public static bool RPressed { get; private set; }
+        public static bool TPressed { get; private set; }
+
+
+
+
+
         public static bool Exit { get; private set; } = false;
 
         public static void Update(GameTime gameTime)
@@ -127,6 +137,50 @@ namespace TitlePending
 
             #endregion
 
+            //Tests
+            if (currentKeyboardState.IsKeyDown(Keys.Q) && !priorKeyboardState.IsKeyDown(Keys.Q))
+            {
+                QPressed = true;
+            }
+            else
+            {
+                QPressed = false;
+            }
+
+            if (currentKeyboardState.IsKeyDown(Keys.W) && !priorKeyboardState.IsKeyDown(Keys.W))
+            {
+                WPressed = true;
+            }
+            else
+            {
+                WPressed = false;
+            }
+
+            if (currentKeyboardState.IsKeyDown(Keys.E) && !priorKeyboardState.IsKeyDown(Keys.E))
+            {
+                EPressed = true;
+            }
+            else
+            {
+                EPressed = false;
+            }
+
+            if (currentKeyboardState.IsKeyDown(Keys.R) && !priorKeyboardState.IsKeyDown(Keys.R))
+            {
+                RPressed = true;
+            }
+            else
+            {
+                RPressed = false;
+            }
+            if (currentKeyboardState.IsKeyDown(Keys.T) && !priorKeyboardState.IsKeyDown(Keys.T))
+            {
+                TPressed = true;
+            }
+            else
+            {
+                TPressed = false;
+            }
             #region Exit Input
             if (currentGamePadState.Buttons.Back == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.Escape))
             {

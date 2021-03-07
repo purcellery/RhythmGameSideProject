@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using TitlePending.Collisions;
 
 namespace TitlePending.Collisions
 {
@@ -23,5 +26,10 @@ namespace TitlePending.Collisions
             return Math.Pow(c.Radius, 2) >= Math.Pow(c.Center.X - nearestX, 2) + Math.Pow(c.Center.Y - nearestY, 2);
         }
         public static bool Collides(BoundingRectangle r, BoundingCircle c) => Collides(c, r);
+
+        public static void DrawLine(SpriteBatch sb, Vector2 start, Vector2 end, Color color)
+        {
+            Vector2 edge = end - start;
+        }
     }
 }
