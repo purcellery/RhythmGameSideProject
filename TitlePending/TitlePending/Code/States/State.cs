@@ -10,29 +10,45 @@ namespace TitlePending.Code.States
     public abstract class State
     {
         public StateID stateID;
+        protected List<GameObject> gameObjects;
+
         public State(StateID stateID)
         {
             this.stateID = stateID;
+            gameObjects = new List<GameObject>();
         }
 
-        protected virtual void Initialize()
+        public virtual void Initialize()
         {
 
         }
 
-        protected virtual void LoadContent(ContentManager content)
+        public virtual void LoadContent(ContentManager content)
         {
-            
+            foreach (GameObject go in gameObjects)
+            {
+                go.LoadContent(content);
+            }
         }
 
-        protected virtual void Update() 
+        public virtual void Update() 
         {
-
+            foreach (GameObject go in gameObjects)
+            {
+                go.Update();
+            }
         }
 
-        protected virtual void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Begin();
 
+            foreach (GameObject go in gameObjects)
+            {
+                go.Draw(spriteBatch);
+            }
+
+            spriteBatch.End();
         }
 
     }
@@ -40,7 +56,7 @@ namespace TitlePending.Code.States
     {
         MainMenu,
         OptionMenu,
-        SongSelect,
-        SongPlay
+        SongSelection,
+        PlayGame
     }
 }

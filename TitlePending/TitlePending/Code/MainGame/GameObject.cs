@@ -14,6 +14,10 @@ namespace TitlePending
         protected Texture2D texture;
         public Vector2 position = Vector2.Zero;
         public Action<ContentManager> earlyContentLoad = (content) => { };
+        public float scale = 1;
+
+        public Color color = Color.White;
+        public float rotation = 0;
 
         public GameObject(Vector2 position)
         {
@@ -35,9 +39,9 @@ namespace TitlePending
             if(texture != null)
             {
                 Vector2 drawPosition = position;
-                drawPosition.X -= texture.Width / 2;
-                drawPosition.Y -= texture.Height / 2;
-                batch.Draw(texture, drawPosition, Color.White);
+                drawPosition.X -= texture.Width / 2f * scale;
+                drawPosition.Y -= texture.Height / 2f * scale;
+                batch.Draw(texture, drawPosition, null, color, rotation, Vector2.Zero, scale, SpriteEffects.None, 0);
             }
         }
 

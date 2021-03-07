@@ -17,7 +17,13 @@ namespace TitlePending
 
         public static Vector2 Direction { get; private set; }
 
-        public static bool Pressed { get; private set; }
+        public static bool SpacePressed { get; private set; }
+        public static bool APressed { get; private set; }
+        public static bool SPressed { get; private set; }
+        public static bool DPressed { get; private set; }
+        public static bool FPressed { get; private set; }
+        public static bool GPressed { get; private set; }
+
 
         public static bool Exit { get; private set; } = false;
 
@@ -63,11 +69,60 @@ namespace TitlePending
 
             if (currentKeyboardState.IsKeyDown(Keys.Space) && !priorKeyboardState.IsKeyDown(Keys.Space))
             {
-                Pressed = true;
+                SpacePressed = true;
             }
             else
             {
-                Pressed = false;
+                SpacePressed = false;
+            }
+
+            #endregion
+
+            #region Note Input
+
+            if (currentKeyboardState.IsKeyDown(Keys.A))
+            {
+                APressed = true;
+            }
+            else
+            {
+                APressed = false;
+            }
+
+            if (currentKeyboardState.IsKeyDown(Keys.S))
+            {
+                SPressed = true;
+            }
+            else
+            {
+                SPressed = false;
+            }
+
+            if (currentKeyboardState.IsKeyDown(Keys.D))
+            {
+                DPressed = true;
+            }
+            else
+            {
+                DPressed = false;
+            }
+
+            if (currentKeyboardState.IsKeyDown(Keys.F))
+            {
+                FPressed = true;
+            }
+            else
+            {
+                FPressed = false;
+            }
+
+            if (currentKeyboardState.IsKeyDown(Keys.G))
+            {
+                GPressed = true;
+            }
+            else
+            {
+                GPressed = false;
             }
 
             #endregion

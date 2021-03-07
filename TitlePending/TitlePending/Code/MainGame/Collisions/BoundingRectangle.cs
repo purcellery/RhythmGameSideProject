@@ -48,5 +48,14 @@ namespace TitlePending.Collisions
         {
             return CollisionHelper.Collides(other, this);
         }
+
+        public void ResetValues(Vector2 position, Vector2 size)
+        {
+            X = position.X;
+            Y = position.Y;
+            Width = size.X;
+            Height = size.Y;
+
+        }
     }
 }
