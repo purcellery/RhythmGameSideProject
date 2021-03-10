@@ -20,6 +20,8 @@ namespace TitlePending.Code.MainGame.Gameplay
 
         private Texture2D darkTexture;
         private Texture2D lightTexture;
+
+        public GameScore score;
         public NoteHitter(Vector2 position) : base(position)
         {
             scale = 0.5f;
@@ -32,6 +34,7 @@ namespace TitlePending.Code.MainGame.Gameplay
             lightTexture = content.Load<Texture2D>("square");
             darkTexture = content.Load<Texture2D>("darksquare");
             texture = lightTexture;
+            score = new GameScore(new Vector2(16, 16));                                         // FIX THIS LATER
 
             this.bounds = new BoundingRectangle(position - new Vector2(texture.Width / 2 * scale, 0), texture.Width * scale, texture.Height * scale);
         }
@@ -52,9 +55,25 @@ namespace TitlePending.Code.MainGame.Gameplay
                             {
                                 //successfully hitting a note
                                 n.color = Color.Transparent;
+                                score.Score += 50 * score.Multiplier;
+                                score.NotesHitInARow++;
                                 break;
                             }
+                            if(score.NotesHitInARow >= 10 && score.NotesHitInARow < 20)
+                            {
+                                score.Multiplier = 2;
+                            }
+                            else if(score.NotesHitInARow >= 20 && score.NotesHitInARow < 30)
+                            {
+                                score.Multiplier = 3;
+                            }
+                            else if(score.NotesHitInARow >= 30 && score.NotesHitInARow < 40)
+                            {
+                                score.Multiplier = 4;
+                            }
+                                                                                                // NEED TO ADD LOGIC FOR MISSING NOTE .. MAKES MULTIPLIER 1, NOTES HIT IN A ROW 0.
                         }
+
                     }
                 }
             }

@@ -20,7 +20,7 @@ namespace TitlePending.Code.States
                 backgroundImage.SetTexture(content.Load<Texture2D>("MainMenu"));
             };
             gameObjects.Add(backgroundImage);
-            gameObjects.Add(new Button(new Vector2(128, 128), 0, () => {
+            gameObjects.Add(new Button(new Vector2(GameManager.centerpoint.X, GameManager.centerpoint.Y), 0, () => {
                 GameManager.SwitchState(StateID.PlayGame);
                 }
             ));
