@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using System.Text;
 using TitlePending.Code.States;
+using TitlePending.Code.MainGame.Gameplay;
 
 namespace TitlePending.Code.MainGame
 {
@@ -27,9 +28,12 @@ namespace TitlePending.Code.MainGame
         public static Vector2 BlueOrigin { get; set; } 
         public static Vector2 OrangeOrigin { get; set; } 
 
+
         public static Vector2 centerpoint => gameCore.GraphicsDevice.Viewport.Bounds.Center.ToVector2();
         public static Vector2 ScreenSize => gameCore.GraphicsDevice.Viewport.Bounds.Size.ToVector2();
         public static float AspectRatio => gameCore.GraphicsDevice.Viewport.AspectRatio;
+
+        public static GameScore Score;
 
         public static void Exit()
         {

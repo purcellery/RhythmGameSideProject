@@ -11,9 +11,9 @@ namespace TitlePending.Code.MainGame.Gameplay
     public class Note : GameObject
     {
         public bool Past { get; set; } = false;
+        public bool RegisteredPast { get; set; } = false;
 
         private BoundingRectangle bounds;
-
 
         public float originalScale = 0.25f;
         public float finalScale = 0.5f;
@@ -21,7 +21,11 @@ namespace TitlePending.Code.MainGame.Gameplay
         public Vector2 noteDestination;
 
         private float progression = 0;
-        public float testSpeed = 1.8f;
+        public static float testSpeed = 1.8f;
+
+        private float timer = 0;
+        private bool done = false;
+
 
         public Note(Vector2 position, NoteColor color): base(position)
         {
@@ -73,10 +77,42 @@ namespace TitlePending.Code.MainGame.Gameplay
             progression += Time.deltaTime;
             position = Vector2.Lerp(noteOrigin, noteDestination, progression/testSpeed);
             float distanceFraction = Vector2.Distance(position, noteDestination) / Vector2.Distance(noteOrigin, noteDestination);
-            scale = MathHelper.Lerp(finalScale, originalScale, distanceFraction);
 
+            bool localDone = distanceFraction <= 0.01f;
+
+            if (localDone)
+            {
+                done = true;
+                scale = finalScale;
+            }
+
+            if (scale < finalScale && !done)
+            {
+                scale = MathHelper.Lerp(finalScale, originalScale, distanceFraction);
+            }
+            if (scale == finalScale) 
+            {
+                timer += Time.deltaTime;
+            }
+
+            CheckPast();
             this.Bounds.ResetValues(position, texture.Bounds.Size.ToVector2() * scale);
 
+        }
+
+        public void CheckPast()
+        {
+            if(timer >= 1)
+            {
+                //if note misses
+                this.Past = true;
+                GameManager.Score.NotesHitInARow = 0;
+                GameManager.Score.Multiplier = 1;
+                this.RegisteredPast = true;
+
+                // FIX THIS LATER
+                GameManager.currentState.RemoveObject(this);
+            }
         }
     }
     public enum NoteColor

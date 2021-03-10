@@ -11,11 +11,13 @@ namespace TitlePending.Code.States
     {
         public StateID stateID;
         public List<GameObject> gameObjects;
+        private List<GameObject> deleteQueue;
 
         public State(StateID stateID)
         {
             this.stateID = stateID;
             gameObjects = new List<GameObject>();
+            deleteQueue = new List<GameObject>();
         }
 
         public virtual void Initialize()
@@ -37,6 +39,11 @@ namespace TitlePending.Code.States
             {
                 go.Update();
             }
+            while (deleteQueue.Count > 0)
+            {
+                gameObjects.Remove(deleteQueue[0]);
+                deleteQueue.RemoveAt(0);
+            }
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
@@ -49,6 +56,11 @@ namespace TitlePending.Code.States
             }
 
             spriteBatch.End();
+        }
+
+        public void RemoveObject(GameObject thing)
+        {
+            deleteQueue.Add(thing);
         }
 
     }

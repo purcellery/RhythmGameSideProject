@@ -21,7 +21,8 @@ namespace TitlePending.Code.MainGame.Gameplay
         private Texture2D darkTexture;
         private Texture2D lightTexture;
 
-        public GameScore score;
+        private GameScore score => GameManager.Score;
+
         public NoteHitter(Vector2 position) : base(position)
         {
             scale = 0.5f;
@@ -34,7 +35,6 @@ namespace TitlePending.Code.MainGame.Gameplay
             lightTexture = content.Load<Texture2D>("square");
             darkTexture = content.Load<Texture2D>("darksquare");
             texture = lightTexture;
-            score = new GameScore(new Vector2(16, 16));                                         // FIX THIS LATER
 
             this.bounds = new BoundingRectangle(position - new Vector2(texture.Width / 2 * scale, 0), texture.Width * scale, texture.Height * scale);
         }
@@ -42,44 +42,63 @@ namespace TitlePending.Code.MainGame.Gameplay
         {
             base.Update();
 
-            if (onTrigger())
+
+            texture = lightTexture;
+            int hitsNote = 0;
+            if (InputManager.SpacePressed)
             {
-                texture = darkTexture;
-                if (InputManager.SpacePressed)
+                foreach (GameObject go in GameManager.currentState.gameObjects)
                 {
-                    foreach(GameObject go in GameManager.currentState.gameObjects)
+                    if (go is Note n && n.color == color)
                     {
-                        if(go is Note n)
+
+                        if (onTrigger())
                         {
+                            if (score.NotesHitInARow >= 10 && score.NotesHitInARow < 20)
+                            {
+                                score.Multiplier = 2;
+                            }
+                            else if (score.NotesHitInARow >= 20 && score.NotesHitInARow < 30)
+                            {
+                                score.Multiplier = 3;
+                            }
+                            else if (score.NotesHitInARow >= 30 && score.NotesHitInARow < 40)
+                            {
+                                score.Multiplier = 4;
+                            }
                             if (n.Bounds.CollidesWith(bounds))
                             {
                                 //successfully hitting a note
                                 n.color = Color.Transparent;
                                 score.Score += 50 * score.Multiplier;
                                 score.NotesHitInARow++;
-                                break;
-                            }
-                            if(score.NotesHitInARow >= 10 && score.NotesHitInARow < 20)
-                            {
-                                score.Multiplier = 2;
-                            }
-                            else if(score.NotesHitInARow >= 20 && score.NotesHitInARow < 30)
-                            {
-                                score.Multiplier = 3;
-                            }
-                            else if(score.NotesHitInARow >= 30 && score.NotesHitInARow < 40)
-                            {
-                                score.Multiplier = 4;
-                            }
-                                                                                                // NEED TO ADD LOGIC FOR MISSING NOTE .. MAKES MULTIPLIER 1, NOTES HIT IN A ROW 0.
-                        }
+                                n.RegisteredPast = true;
+                                hitsNote = 1;
 
+                                //FIX THIS LATER -- Destroys the note in a cheaty way
+                                GameManager.currentState.RemoveObject(n);
+                            }
+                            else
+                            {
+                                hitsNote = 2;
+                            }
+                        }
+                        if(hitsNote == 0)
+                        {
+                            hitsNote = 3;
+                        }
                     }
                 }
             }
-            else
+            if (hitsNote == 2 || hitsNote == 3)
             {
-                texture = lightTexture;
+                // missing a note
+                score.NotesHitInARow = 0;
+                score.Multiplier = 1;
+            }
+            if (onTrigger())
+            {
+                texture = darkTexture;
             }
         }
 

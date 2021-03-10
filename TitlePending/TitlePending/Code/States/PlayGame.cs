@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using TitlePending.Code.MainGame;
 using TitlePending.Code.MainGame.Gameplay;
+using Microsoft.Xna.Framework.Media;
 
 namespace TitlePending.Code.States
 {
@@ -19,14 +20,24 @@ namespace TitlePending.Code.States
         private BasicEffect effect;
         private ContentManager noteContent;
 
+        private GameSong thisSong;
+        private List<float> deleteQueue;
 
         public PlayGame() : base(StateID.MainMenu)
         {
+            deleteQueue = new List<float>();
 
             GameObject backgroundImage = new GameObject(GameManager.centerpoint);
             backgroundImage.earlyContentLoad = (content) => {
                 backgroundImage.SetTexture(content.Load<Texture2D>("MainMenu"));
             };
+
+            GameScore score = new GameScore(new Vector2(16, 16));          //Fix this
+            gameObjects.Add(score);
+            GameManager.Score = score;
+
+            thisSong = new GameSong(Vector2.Zero);
+            gameObjects.Add(thisSong);
         }
         public override void Initialize()
         {
@@ -50,12 +61,35 @@ namespace TitlePending.Code.States
             effect.View = Matrix.CreateRotationX(MathHelper.ToRadians(-44.88f)) * //angle of rotation looking at the track
                           Matrix.CreateLookAt(new Vector3(0, 3f, 10), new Vector3(0, -1, 6), Vector3.Up);
             effect.Projection = Matrix.CreatePerspective(GameManager.ScreenSize.X / 2, -GameManager.ScreenSize.Y / 2, 1f, 100f);
+
+            TimeSpan bufferTest = TimeSpan.FromSeconds(0);
+            MediaPlayer.Play(thisSong.song, bufferTest);
         }
 
         public override void Update()
         {
             base.Update();
-            SpawnNote();
+            //SpawnNote();
+
+            foreach (KeyValuePair<NoteColor, HashSet<float>> kvp in thisSong.notes)
+            {
+                foreach (float time in kvp.Value)
+                {
+                    if (MediaPlayer.PlayPosition.TotalSeconds >= time - Note.testSpeed) // so much to fix lmao
+                    {
+                        Note newQ = new Note(Vector2.Zero, kvp.Key);
+                        newQ.LoadContent(noteContent);
+                        gameObjects.Add(newQ);
+
+                        deleteQueue.Add(time);
+                    }
+                }
+                while (deleteQueue.Count > 0)
+                {
+                    kvp.Value.Remove(deleteQueue[0]);
+                    deleteQueue.RemoveAt(0);
+                }
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
