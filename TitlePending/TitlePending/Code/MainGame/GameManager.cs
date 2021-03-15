@@ -6,12 +6,11 @@ using System.Text;
 using TitlePending.Code.States;
 using TitlePending.Code.MainGame.Gameplay;
 
-namespace TitlePending.Code.MainGame
+namespace TitlePending
 {
     public static class GameManager
     {
         public static int currentlySelected = 0;
-
         public static TitlePending gameCore { get; set; }
 
         public static Vector2 GreenHitter { get; set; }

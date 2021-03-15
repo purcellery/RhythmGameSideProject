@@ -28,6 +28,8 @@ namespace TitlePending.Code.MainGame.Gameplay
             HashSet<float> greenNotesPositions = new HashSet<float>();
             HashSet<float> redNotesPositions = new HashSet<float>();
             HashSet<float> yellowNotesPositions = new HashSet<float>();
+            HashSet<float> blueNotesPositions = new HashSet<float>();
+            HashSet<float> orangeNotesPositions = new HashSet<float>();
 
             greenNotesPositions.Add(21.33f);
             redNotesPositions.Add(22.33f);
@@ -130,6 +132,8 @@ namespace TitlePending.Code.MainGame.Gameplay
             notes.Add(NoteColor.Green, greenNotesPositions);
             notes.Add(NoteColor.Red, redNotesPositions);
             notes.Add(NoteColor.Yellow, yellowNotesPositions);
+            notes.Add(NoteColor.Blue, blueNotesPositions);
+            notes.Add(NoteColor.Orange, orangeNotesPositions);
         }
 
         public override void LoadContent(ContentManager content)

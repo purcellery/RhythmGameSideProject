@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace TitlePending
+namespace TitlePending.Code.MainGame
 {
     public static class InputManager
     {
@@ -52,27 +52,60 @@ namespace TitlePending
 
             #endregion
 
-            #region Direction Input
-
-            Direction = currentGamePadState.ThumbSticks.Right * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (currentKeyboardState.IsKeyDown(Keys.Left) || currentKeyboardState.IsKeyDown(Keys.A))
+            #region Main Menu & Options Menu Input
+            if ((currentKeyboardState.IsKeyDown(Keys.Up) && priorKeyboardState.IsKeyUp(Keys.Up)) && GameManager.currentState.stateID == StateID.MainMenu)
             {
-                Direction += new Vector2(-100 * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
-            }
-            if (currentKeyboardState.IsKeyDown(Keys.Right) || currentKeyboardState.IsKeyDown(Keys.D))
-            {
-                Direction += new Vector2(100 * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
-            }
-            if (currentKeyboardState.IsKeyDown(Keys.Up) || currentKeyboardState.IsKeyDown(Keys.W))
-            {
-                Direction += new Vector2(0, -100 * (float)gameTime.ElapsedGameTime.TotalSeconds);
-            }
-            if (currentKeyboardState.IsKeyDown(Keys.Down) || currentKeyboardState.IsKeyDown(Keys.S))
-            {
-                Direction += new Vector2(0, 100 * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                // goes up a button, if at top loops to bottom button
+                if(GameManager.currentlySelected == 0)
+                {
+                    GameManager.currentlySelected = 2;
+                }
+                else
+                {
+                    GameManager.currentlySelected -= 1;
+                }
             }
 
+            if (GameManager.currentState.stateID == StateID.MainMenu)
+            {
+                if ((currentKeyboardState.IsKeyDown(Keys.Down) && priorKeyboardState.IsKeyUp(Keys.Down)))
+                {
+                    // goes down a button, if at bottom loops to top button
+                    if (GameManager.currentlySelected == 2)
+                    {
+                        GameManager.currentlySelected = 0;
+                    }
+                    else
+                    {
+                        GameManager.currentlySelected += 1;
+                    }
+                }
+            }
+            else if(GameManager.currentState.stateID == StateID.OptionMenu)
+            {
+                if ((currentKeyboardState.IsKeyDown(Keys.Left) && priorKeyboardState.IsKeyUp(Keys.Left)) && GameManager.currentState.stateID == StateID.OptionMenu)
+                {
+                    if (GameManager.currentlySelected == 0)
+                    {
+                        GameManager.currentlySelected = 2;
+                    }
+                    else
+                    {
+                        GameManager.currentlySelected -= 1;
+                    }
+                }
+                if ((currentKeyboardState.IsKeyDown(Keys.Right) && priorKeyboardState.IsKeyUp(Keys.Right)) && GameManager.currentState.stateID == StateID.OptionMenu)
+                {
+                    if (GameManager.currentlySelected == 2)
+                    {
+                        GameManager.currentlySelected = 0;
+                    }
+                    else
+                    {
+                        GameManager.currentlySelected += 1;
+                    }
+                }
+            }
             #endregion
 
             #region Space Bar Input
@@ -137,7 +170,7 @@ namespace TitlePending
 
             #endregion
 
-            //Tests
+            #region Test Input
             if (currentKeyboardState.IsKeyDown(Keys.Q) && !priorKeyboardState.IsKeyDown(Keys.Q))
             {
                 QPressed = true;
@@ -181,6 +214,8 @@ namespace TitlePending
             {
                 TPressed = false;
             }
+            #endregion
+
             #region Exit Input
             if (currentGamePadState.Buttons.Back == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.Escape))
             {

@@ -10,30 +10,62 @@ namespace TitlePending.Code.MainGame.UI
 {
     public class Button : GameObject
     {
-        private Action onClick;
+        private Action activate;
         public int orderID;
+        public ButtonType buttonType;
         
-        public Button(Vector2 position, int orderID, Action onClick) : base(position)
+        public Button(Vector2 position, int orderID, Action onClick, ButtonType type) : base(position)
         {
-            this.onClick = onClick;
+            this.activate = onClick;
             this.orderID = orderID;
+            buttonType = type;
         }
 
         public void CheckClick()
         {
             if(GameManager.currentlySelected == orderID)
             {
+                this.color = Color.Gray;
                 if (InputManager.SpacePressed)
                 {
-                    onClick();
+                    activate();
                 }
+            }
+            else
+            {
+                this.color = Color.White;
             }
         }
 
         public override void LoadContent(ContentManager content)
         {
             base.LoadContent(content);
-            texture = content.Load<Texture2D>("PlaceholderButton");
+            
+            switch (buttonType)
+            {
+                case ButtonType.StartGame:
+                    texture = content.Load<Texture2D>("StartGame");
+                    break;
+
+                case ButtonType.Options:
+                    texture = content.Load<Texture2D>("OptionsMenu");
+                    break;
+
+                case ButtonType.ExitGame:
+                    texture = content.Load<Texture2D>("ExitGame");
+                    break;
+
+                case ButtonType.VolumeDown:
+                    texture = content.Load<Texture2D>("VolumeDown");
+                    break;
+
+                case ButtonType.VolumeUp:
+                    texture = content.Load<Texture2D>("VolumeUp");
+                    break;
+                case ButtonType.Back:
+                    texture = content.Load<Texture2D>("Done");
+                    break;
+            }
         }
 
         public override void Update()
@@ -41,10 +73,12 @@ namespace TitlePending.Code.MainGame.UI
             CheckClick();
         }
     }
-    //public enum Buttons{
-    //    StartGame,
-    //    Options,
-    //    ExitGame,
-
-    //}
+    public enum ButtonType{
+        StartGame,
+        Options,
+        ExitGame,
+        VolumeUp,
+        VolumeDown,
+        Back
+    }
 }
