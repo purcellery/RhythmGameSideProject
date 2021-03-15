@@ -25,6 +25,7 @@ namespace TitlePending.Code.States
                 backgroundImage.SetTexture(content.Load<Texture2D>("MainMenu"));
             };
             gameObjects.Add(backgroundImage);
+
             gameObjects.Add(new Button(new Vector2(GameManager.centerpoint.X, GameManager.centerpoint.Y), 0, () =>
             {
                 GameManager.SwitchState(StateID.PlayGame);
@@ -50,14 +51,16 @@ namespace TitlePending.Code.States
             mainMenuIntro = content.Load<Song>("MainMenuIntro");
             mainMenuSong = content.Load<Song>("MainMenuLoop");
 
-            MediaPlayer.Volume = .5f;
-            MediaPlayer.Play(mainMenuIntro);
+            if (MediaPlayer.PlayPosition.TotalSeconds == 0)
+            {
+                MediaPlayer.Volume = 0.5f;
+                MediaPlayer.Play(mainMenuIntro);
+            }
         }
 
         public override void Update()
         {
             base.Update();
-
             if (MediaPlayer.PlayPosition.TotalSeconds >= 7.66)
             {
                 MediaPlayer.Play(mainMenuSong);

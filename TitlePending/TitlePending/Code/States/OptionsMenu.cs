@@ -52,8 +52,6 @@ namespace TitlePending.Code.States
 
         public override void Update()
         {
-            base.Update();
-            MediaPlayer.Resume();
-        }
+            base.Update();        }
     }
 }
