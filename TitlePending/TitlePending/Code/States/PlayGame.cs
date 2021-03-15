@@ -90,6 +90,10 @@ namespace TitlePending.Code.States
                     deleteQueue.RemoveAt(0);
                 }
             }
+            if (InputManager.RPressed)
+            {
+                GameManager.SwitchState(StateID.PlayGame);
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)

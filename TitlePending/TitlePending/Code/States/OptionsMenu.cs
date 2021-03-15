@@ -29,7 +29,7 @@ namespace TitlePending.Code.States
             };
             gameObjects.Add(backgroundImage);
 
-            gameObjects.Add(new Button(new Vector2(GameManager.centerpoint.X - 400, GameManager.centerpoint.Y - 400), 0, () =>
+            gameObjects.Add(new Button(new Vector2(GameManager.centerpoint.X - 600, GameManager.centerpoint.Y), 0, () =>
             {
                 //Turn down volume
                 GameManager.SwitchState(StateID.MainMenu);
