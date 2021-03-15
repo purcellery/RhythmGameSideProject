@@ -61,10 +61,11 @@ namespace TitlePending.Code.States
         public override void Update()
         {
             base.Update();
-            if (MediaPlayer.PlayPosition.TotalSeconds >= 7.66)
+            if (MediaPlayer.PlayPosition.TotalSeconds >= 7.64 && !GameManager.hasPlayedIntro)
             {
                 MediaPlayer.Play(mainMenuSong);
                 MediaPlayer.IsRepeating = true;
+                GameManager.hasPlayedIntro = true;
             }
         }
     }

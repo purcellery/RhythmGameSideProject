@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using TitlePending.Code.MainGame;
@@ -12,6 +13,9 @@ namespace TitlePending.Code.States
 {
     public class OptionsMenu : State
     {
+        public Song mainMenuSong;
+        public Song mainMenuIntro;
+
         public OptionsMenu() : base(StateID.OptionMenu)
         {
             GameManager.currentState = this;
@@ -50,8 +54,28 @@ namespace TitlePending.Code.States
             ));
         }
 
+        public override void LoadContent(ContentManager content)
+        {
+            base.LoadContent(content);
+            mainMenuIntro = content.Load<Song>("MainMenuIntro");
+            mainMenuSong = content.Load<Song>("MainMenuLoop");
+
+            if (MediaPlayer.PlayPosition.TotalSeconds == 0)
+            {
+                MediaPlayer.Volume = 0.5f;
+                MediaPlayer.Play(mainMenuIntro);
+            }
+        }
+
         public override void Update()
         {
-            base.Update();        }
+            base.Update();
+            if (MediaPlayer.PlayPosition.TotalSeconds >= 7.64 && !GameManager.hasPlayedIntro)
+            {
+                MediaPlayer.Play(mainMenuSong);
+                MediaPlayer.IsRepeating = true;
+                GameManager.hasPlayedIntro = true;
+            }
+        }
     }
 }

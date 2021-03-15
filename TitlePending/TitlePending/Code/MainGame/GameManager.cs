@@ -21,6 +21,8 @@ namespace TitlePending
 
         public static State currentState;
 
+        public static bool hasPlayedIntro = false;
+
         public static Vector2 GreenOrigin { get; set; }
         public static Vector2 RedOrigin { get; set; } 
         public static Vector2 YellowOrigin { get; set; } 
