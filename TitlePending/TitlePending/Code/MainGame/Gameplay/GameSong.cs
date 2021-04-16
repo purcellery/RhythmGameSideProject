@@ -39,6 +39,8 @@ namespace TitlePending.Code.MainGame.Gameplay
             HashSet<float> blueNotesPositions = new HashSet<float>();
             HashSet<float> orangeNotesPositions = new HashSet<float>();
 
+            MediaPlayer.Volume = GameManager.origVolume;
+            MediaPlayer.IsRepeating = false;
             GetSongData(greenNotesPositions, redNotesPositions, yellowNotesPositions, blueNotesPositions, orangeNotesPositions);
 
             notes.Add(NoteColor.Green, greenNotesPositions);
@@ -65,9 +67,9 @@ namespace TitlePending.Code.MainGame.Gameplay
         public override void Draw(SpriteBatch batch)
         {
             base.Draw(batch);
-            if(MediaPlayer.PlayPosition.TotalSeconds > endtime)
+            if(MediaPlayer.PlayPosition.TotalSeconds >= endtime)
             {
-                batch.DrawString(youWinFont, "You win! Score: " + GameManager.Score.Score.ToString(), new Vector2(GameManager.centerpoint.X, GameManager.centerpoint.Y / 2), Color.MediumPurple);
+                batch.DrawString(youWinFont, "You win! Score: " + GameManager.Score.Score.ToString() + " Press R to play again. Press Esc to Exit.", new Vector2(GameManager.centerpoint.X, GameManager.centerpoint.Y / 2), Color.MediumPurple);
                 //FIX THE FORMATTING HERE
             }
         }

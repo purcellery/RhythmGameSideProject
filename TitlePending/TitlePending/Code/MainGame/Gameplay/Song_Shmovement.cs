@@ -26,6 +26,8 @@ namespace TitlePending.Code.MainGame.Gameplay
         HashSet<float> blueNotesPositions, HashSet<float> orangeNotesPositions)
         {
             //EASY DIFFICULTY
+
+            //verse 1
             greenNotesPositions.Add(23.25f);
             redNotesPositions.Add(23.62f);
             yellowNotesPositions.Add(24f);
@@ -65,9 +67,12 @@ namespace TitlePending.Code.MainGame.Gameplay
             greenNotesPositions.Add(42f);
             redNotesPositions.Add(42.56f);
             greenNotesPositions.Add(43.12f);
+            greenNotesPositions.Add(43.87f);
             redNotesPositions.Add(43.87f);
             yellowNotesPositions.Add(44.25f);
+            redNotesPositions.Add(44.25f);
             redNotesPositions.Add(44.62f);
+            greenNotesPositions.Add(44.62f);
 
             //bridge
             greenNotesPositions.Add(47.62f);
@@ -79,11 +84,18 @@ namespace TitlePending.Code.MainGame.Gameplay
             greenNotesPositions.Add(51f);
             redNotesPositions.Add(51.18f);
             greenNotesPositions.Add(51.37f);
-            yellowNotesPositions.Add(52.12f);
             redNotesPositions.Add(52.12f);
-            redNotesPositions.Add(52.68f);
             greenNotesPositions.Add(52.68f);
 
+            greenNotesPositions.Add(53.62f);
+            redNotesPositions.Add(53.81f);
+            yellowNotesPositions.Add(54f);
+            greenNotesPositions.Add(55.87f);
+            redNotesPositions.Add(56.25f);
+            redNotesPositions.Add(56.62f);
+            yellowNotesPositions.Add(57f);
+            redNotesPositions.Add(58.12f);
+            greenNotesPositions.Add(58.5f);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace TitlePending.Code.States
             GameManager.currentState = this;
 
             MediaPlayer.Stop();
-            MediaPlayer.Volume = 0.5f;
+            MediaPlayer.Volume = GameManager.origVolume;
             GameManager.origVolume = MediaPlayer.Volume;
             MediaPlayer.Play(mainMenuIntro);
 

@@ -66,7 +66,7 @@ namespace TitlePending.Code.States
         {
             base.Update();
 
-            if(MediaPlayer.PlayPosition.TotalSeconds <= GameManager.minPreviewTime + fadeTime)
+            /*if(MediaPlayer.PlayPosition.TotalSeconds <= GameManager.minPreviewTime + fadeTime)
             {
                 MediaPlayer.Volume = GameManager.origVolume * ( (float) MediaPlayer.PlayPosition.TotalSeconds - GameManager.minPreviewTime) / fadeTime;
             }
@@ -79,7 +79,7 @@ namespace TitlePending.Code.States
             {
                 GameManager.currentlySelected = GameManager.currentlySelected;
 
-            }
+            }*/
         }
     }
 

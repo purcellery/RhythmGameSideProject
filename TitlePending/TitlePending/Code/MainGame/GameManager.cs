@@ -47,7 +47,7 @@ namespace TitlePending
 
         public static float maxPreviewTime { get; set; }
 
-        public static float origVolume { get; set; }
+        public static float origVolume { get; set; } = 0.5f;
 
         public static Dictionary<SongID, Song> songDictionary { get; set; }
 
