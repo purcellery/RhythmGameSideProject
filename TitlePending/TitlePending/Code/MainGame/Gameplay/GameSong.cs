@@ -69,7 +69,7 @@ namespace TitlePending.Code.MainGame.Gameplay
             base.Draw(batch);
             if(MediaPlayer.PlayPosition.TotalSeconds >= endtime)
             {
-                batch.DrawString(youWinFont, "You win! Score: " + GameManager.Score.Score.ToString() + " Press R to play again. Press Esc to Exit.", new Vector2(GameManager.centerpoint.X, GameManager.centerpoint.Y / 2), Color.MediumPurple);
+                batch.DrawString(youWinFont, "You win! Score: " + GameManager.Score.Score.ToString() + " Press R to play again.\n Press Esc to Exit.", new Vector2(GameManager.centerpoint.X, GameManager.centerpoint.Y / 2), Color.MediumPurple);
                 //FIX THE FORMATTING HERE
             }
         }
