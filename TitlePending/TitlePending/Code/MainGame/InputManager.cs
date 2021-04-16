@@ -53,7 +53,7 @@ namespace TitlePending.Code.MainGame
             #endregion
 
             #region Main Menu & Options Menu Input
-            if ((currentKeyboardState.IsKeyDown(Keys.Up) && priorKeyboardState.IsKeyUp(Keys.Up)) && GameManager.currentState.stateID == StateID.MainMenu)
+            if ((currentKeyboardState.IsKeyDown(Keys.Up) && priorKeyboardState.IsKeyUp(Keys.Up)) && (GameManager.currentState.stateID == StateID.MainMenu || GameManager.currentState.stateID == StateID.SongSelection))
             {
                 // goes up a button, if at top loops to bottom button
                 if(GameManager.currentlySelected == 0)
@@ -66,7 +66,7 @@ namespace TitlePending.Code.MainGame
                 }
             }
 
-            if (GameManager.currentState.stateID == StateID.MainMenu)
+            if (GameManager.currentState.stateID == StateID.MainMenu || GameManager.currentState.stateID == StateID.SongSelection) // might change this later
             {
                 if ((currentKeyboardState.IsKeyDown(Keys.Down) && priorKeyboardState.IsKeyUp(Keys.Down)))
                 {

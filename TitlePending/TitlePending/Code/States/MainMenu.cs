@@ -10,13 +10,11 @@ namespace TitlePending.Code.States
 {
     public class MainMenu : State
     {
-
         public Song mainMenuSong;
         public Song mainMenuIntro;
 
         public MainMenu() : base(StateID.MainMenu)
         {
-            GameManager.currentState = this;
 
             gameObjects = new List<GameObject>();
             GameObject backgroundImage = new GameObject(GameManager.centerpoint);
@@ -28,7 +26,8 @@ namespace TitlePending.Code.States
 
             gameObjects.Add(new Button(new Vector2(GameManager.centerpoint.X, GameManager.centerpoint.Y), 0, () =>
             {
-                GameManager.SwitchState(StateID.PlayGame);
+                GameManager.SwitchState(StateID.SongSelection);
+                GameManager.currentlySelected = 0;
             }, ButtonType.StartGame
             ));
 
@@ -38,11 +37,26 @@ namespace TitlePending.Code.States
             }, ButtonType.Options
             ));
 
-            gameObjects.Add(new Button(new Vector2(GameManager.centerpoint.X, GameManager.centerpoint.Y + 200), 2, () =>
+            gameObjects.Add(new Button(new Vector2(GameManager.centerpoint.X, GameManager.centerpoint.Y + 300), 2, () =>
             {
                 GameManager.Exit();
             }, ButtonType.ExitGame
             ));
+        }
+
+        public override void Load()
+        {
+            GameManager.currentState = this;
+
+            MediaPlayer.Stop();
+            MediaPlayer.Volume = 0.5f;
+            GameManager.origVolume = MediaPlayer.Volume;
+            MediaPlayer.Play(mainMenuIntro);
+
+            MediaPlayer.Resume();
+            GameManager.hasPlayedIntro = false;
+
+            System.Diagnostics.Debug.WriteLine("message");
         }
 
         public override void LoadContent(ContentManager content)
@@ -51,11 +65,6 @@ namespace TitlePending.Code.States
             mainMenuIntro = content.Load<Song>("MainMenuIntro");
             mainMenuSong = content.Load<Song>("MainMenuLoop");
 
-            if (MediaPlayer.PlayPosition.TotalSeconds == 0)
-            {
-                MediaPlayer.Volume = 0.5f;
-                MediaPlayer.Play(mainMenuIntro);
-            }
         }
 
         public override void Update()
@@ -67,6 +76,12 @@ namespace TitlePending.Code.States
                 MediaPlayer.IsRepeating = true;
                 GameManager.hasPlayedIntro = true;
             }
+        }
+
+        public void playAfterBack()
+        {
+            //MediaPlayer.Stop();
+            //MediaPlayer.Play(mainMenuIntro);
         }
     }
 }

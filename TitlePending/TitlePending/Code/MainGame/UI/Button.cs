@@ -62,9 +62,19 @@ namespace TitlePending.Code.MainGame.UI
                 case ButtonType.VolumeUp:
                     texture = content.Load<Texture2D>("VolumeUp");
                     break;
+
                 case ButtonType.Back:
                     texture = content.Load<Texture2D>("Done");
                     break;
+
+                case ButtonType.Shmovement:
+                    texture = content.Load<Texture2D>("Shmovement");
+                    break;
+
+                case ButtonType.OneMustVibe:
+                    texture = content.Load<Texture2D>("OneMustVibe");
+                    break;
+
             }
         }
 
@@ -79,6 +89,8 @@ namespace TitlePending.Code.MainGame.UI
         ExitGame,
         VolumeUp,
         VolumeDown,
-        Back
+        Back,
+        Shmovement,
+        OneMustVibe
     }
 }

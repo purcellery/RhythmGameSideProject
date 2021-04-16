@@ -18,7 +18,6 @@ namespace TitlePending.Code.States
 
         public OptionsMenu() : base(StateID.OptionMenu)
         {
-            GameManager.currentState = this;
 
             gameObjects = new List<GameObject>();
 
@@ -41,6 +40,7 @@ namespace TitlePending.Code.States
             {
                 //Turn down volume
                 MediaPlayer.Volume -= 0.1f;
+                GameManager.origVolume = MediaPlayer.Volume;
 
             }, ButtonType.VolumeDown
             ));
@@ -49,9 +49,15 @@ namespace TitlePending.Code.States
             {
                 //Turn up volume
                 MediaPlayer.Volume += 0.1f;
+                GameManager.origVolume = MediaPlayer.Volume;
 
             }, ButtonType.VolumeUp
             ));
+        }
+
+        public override void Load()
+        {
+            GameManager.currentState = this;
         }
 
         public override void LoadContent(ContentManager content)
@@ -60,11 +66,6 @@ namespace TitlePending.Code.States
             mainMenuIntro = content.Load<Song>("MainMenuIntro");
             mainMenuSong = content.Load<Song>("MainMenuLoop");
 
-            if (MediaPlayer.PlayPosition.TotalSeconds == 0)
-            {
-                MediaPlayer.Volume = 0.5f;
-                MediaPlayer.Play(mainMenuIntro);
-            }
         }
 
         public override void Update()

@@ -1,7 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using TitlePending.Code.MainGame;
+using TitlePending.Code.MainGame.Gameplay;
 using TitlePending.Collisions;
 using TitlePending.Code.States;
 
@@ -9,6 +12,7 @@ namespace TitlePending
 {
     public class TitlePending : Game
     {
+        private Dictionary<StateID, State> states;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private State currentState;
@@ -25,20 +29,40 @@ namespace TitlePending
             _graphics.PreferredBackBufferHeight = 1080;
             _graphics.HardwareModeSwitch = false;
             _graphics.ToggleFullScreen();
-    }
+
+
+        }
 
     protected override void Initialize()
         {
             base.Initialize();
-            State menuState = new MainMenu();
-            currentState = menuState;
-            currentState.Initialize();
-            currentState.LoadContent(Content);
+
+            states = new Dictionary<StateID, State>();
+            states.Add(StateID.MainMenu, new MainMenu());
+            states.Add(StateID.OptionMenu, new OptionsMenu());
+            states.Add(StateID.SongSelection, new SongSelection());
+            states.Add(StateID.PlayGame, new PlayGame());
+
+            foreach(KeyValuePair<StateID, State> s in states)
+            {
+                s.Value.Initialize();
+                s.Value.LoadContent(Content);
+            }
+
+            //State menuState = new MainMenu();
+            //currentState = menuState;
+            //currentState.Initialize();
+            //currentState.LoadContent(Content);
+
+            SwitchState(StateID.MainMenu);
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            GameManager.songDictionary = new Dictionary<SongID, Song>();
+            GameManager.songDictionary.Add(SongID.OneMustVibe, Content.Load<Song>("nevertheless, one must vibe"));
+            GameManager.songDictionary.Add(SongID.Shmovement, Content.Load<Song>("ShmoveToTheGroove"));
         }
 
         protected override void Update(GameTime gameTime)
@@ -69,28 +93,11 @@ namespace TitlePending
 
         public void SwitchState(StateID stateID)
         {
-            switch (stateID)
-            {
-                case StateID.MainMenu:
-                    currentState = new MainMenu();
-                    break;
+            currentState = states[stateID];
 
-                case StateID.OptionMenu:
-                    currentState = new OptionsMenu();
-                    break;
-
-                case StateID.SongSelection:
-                    currentState = new SongSelection();
-                    break;
-
-                case StateID.PlayGame:
-                    currentState = new PlayGame();
-                    break;
-            }
             GameManager.currentState = currentState;
-            currentState.Initialize();
-            currentState.LoadContent(Content);
 
+            currentState.Load();
 
         }
     }

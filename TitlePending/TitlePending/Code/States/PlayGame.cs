@@ -23,6 +23,8 @@ namespace TitlePending.Code.States
         private GameSong thisSong;
         private List<float> deleteQueue;
 
+        private ContentManager thisContent;
+
         public PlayGame() : base(StateID.MainMenu)
         {
             deleteQueue = new List<float>();
@@ -36,8 +38,6 @@ namespace TitlePending.Code.States
             gameObjects.Add(score);
             GameManager.Score = score;
 
-            thisSong = new GameSong(Vector2.Zero);
-            gameObjects.Add(thisSong);
         }
         public override void Initialize()
         {
@@ -45,9 +45,29 @@ namespace TitlePending.Code.States
             InitializeOrigins();
         }
 
+        public override void Load()
+        {
+            switch (GameManager.selectedSongID)
+            {
+                case MainGame.Gameplay.SongID.OneMustVibe:
+                    thisSong = new Song_OneMustVibe(Vector2.Zero);
+                    break;
+
+                case MainGame.Gameplay.SongID.Shmovement:
+                    thisSong = new Song_Shmovement(Vector2.Zero);
+                    break;
+            }
+            gameObjects.Add(thisSong);
+            thisSong.LoadContent(thisContent);
+
+            TimeSpan bufferTest = TimeSpan.FromSeconds(0);
+            MediaPlayer.Play(thisSong.song, bufferTest);
+        }
+
         public override void LoadContent(ContentManager content)
         {
             base.LoadContent(content);
+            thisContent = content;
             noteContent = content;
             trackImage = content.Load<Texture2D>("Track");
 
@@ -62,8 +82,6 @@ namespace TitlePending.Code.States
                           Matrix.CreateLookAt(new Vector3(0, 3f, 10), new Vector3(0, -1, 6), Vector3.Up);
             effect.Projection = Matrix.CreatePerspective(GameManager.ScreenSize.X / 2, -GameManager.ScreenSize.Y / 2, 1f, 100f);
 
-            TimeSpan bufferTest = TimeSpan.FromSeconds(0);
-            MediaPlayer.Play(thisSong.song, bufferTest);
         }
 
         public override void Update()

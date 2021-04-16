@@ -63,6 +63,11 @@ namespace TitlePending
             deleteQueue.Add(thing);
         }
 
+        public virtual void Load()
+        {
+
+        }
+
     }
     public enum StateID
     {
